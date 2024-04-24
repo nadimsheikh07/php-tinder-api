@@ -10,6 +10,6 @@ Route::post('/signin', [UserController::class, 'signin']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('/recommended-users', [UserController::class, 'recommendedUsers']);
-    Route::post('/like-user/{user}', [UserController::class, 'like']);
-    Route::resource('users', UserController::class);
+    Route::get('/like-user/{id}', [UserController::class, 'like']);
+    Route::apiResource('users', UserController::class);
 });

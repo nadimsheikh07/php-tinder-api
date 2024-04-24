@@ -8,6 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class UserLike extends Model
 {
     use HasFactory;
+    protected $fillable = [
+        'user_id',
+        'liked_user_id'
+    ];
 
     // Define the user relationship
     public function user()

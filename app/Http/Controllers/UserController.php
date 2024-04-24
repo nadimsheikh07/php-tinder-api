@@ -149,19 +149,22 @@ class UserController extends Controller
         }
     }
 
-    public function like(User $user)
+    public function like($id)
     {
-        $likedUser = request()->user(); // Assuming the authenticated user is the one performing the like action
+        $user = request()->user(); // Assuming the authenticated user is the one performing the like action
+        $user->load('likes');
+
+        $likedUser = User::findOrFail($id);
 
         // Check if the user has already liked the liked user
-        if ($likedUser->likes()->where('liked_user_id', $user->id)->exists()) {
+        if ($user->likes()->where('liked_user_id', $likedUser->id)->exists()) {
             return response()->json(['message' => 'You have already liked this user.'], 400);
         }
 
         // Create a new like entry in the database
         UserLike::create([
-            'user_id' => $likedUser->id,
-            'liked_user_id' => $user->id,
+            'user_id' => $user->id,
+            'liked_user_id' => $likedUser->id,
         ]);
 
         return response()->json(['message' => 'User liked successfully.']);
