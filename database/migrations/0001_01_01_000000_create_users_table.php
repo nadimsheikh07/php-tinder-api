@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
+            $table->text('location')->nullable();
             $table->decimal('latitude', 10, 6)->default(0);
             $table->decimal('longitude', 10, 6)->default(0);
             $table->rememberToken();
