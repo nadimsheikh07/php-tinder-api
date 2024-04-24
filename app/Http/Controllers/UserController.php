@@ -139,7 +139,10 @@ class UserController extends Controller
         // Attempt to authenticate the user
         if (Auth::attempt(['email' => $validatedData['email'], 'password' => $validatedData['password']])) {
             // Authentication successful
-            return response()->json(['message' => 'User signed in successfully', 'user' => Auth::user()]);
+            $user = Auth::user();
+            $token = $user->createToken('YourAppName')->accessToken;
+
+            return response()->json(['message' => 'User signed in successfully', 'user' => $user, 'token' => $token]);
         } else {
             // Authentication failed
             return response()->json(['message' => 'Invalid credentials'], 401);
